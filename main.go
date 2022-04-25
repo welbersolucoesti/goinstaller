@@ -12,28 +12,28 @@ import (
 	"github.com/gocolly/colly"
 )
 
-func downloadFile(url string, path string) (string, error) {
+func downloadFile(url string, path string) (filepath string, err error) {
 
 	resp, err := http.Get(url)
 
 	if err != nil {
-		return "", err
+		return filepath, err
 	}
 
 	defer resp.Body.Close()
 
 	if resp.StatusCode != 200 {
-		return "", fmt.Errorf(fmt.Sprintf("O site devolveu %d", resp.StatusCode))
+		return filepath, fmt.Errorf(fmt.Sprintf("O site devolveu %d", resp.StatusCode))
 	}
 
 	splitedURL := strings.Split(url, "/")
 
-	filepath := splitedURL[(len(splitedURL) - 1)]
+	filepath = splitedURL[(len(splitedURL) - 1)]
 
-	file, errCreateFile := os.Create(filepath)
+	file, err := os.Create(filepath)
 
-	if errCreateFile != nil {
-		return "", errCreateFile
+	if err != nil {
+		return filepath, err
 	}
 
 	defer file.Close()
@@ -41,7 +41,7 @@ func downloadFile(url string, path string) (string, error) {
 	_, err = io.Copy(file, resp.Body)
 
 	if err != nil {
-		return "", err
+		return filepath, err
 	}
 
 	return filepath, nil
