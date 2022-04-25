@@ -65,7 +65,7 @@ func getURLFile() (linuxFileURL string) {
 	return
 }
 
-func descompressFile(filepath string) (err error) {
+func descompressAndInstall(filepath string) (err error) {
 
 	var cmd *exec.Cmd
 
@@ -103,7 +103,7 @@ func main() {
 		log.Panic(err.Error())
 	}
 
-	err = descompressFile(filepath)
+	err = descompressAndInstall(filepath)
 
 	if err != nil {
 		log.Panic(err.Error())
