@@ -14,6 +14,8 @@ import (
 
 func downloadFile(url string, path string) (filepath string, err error) {
 
+	fmt.Println("== Baixando o arquivo ...")
+
 	resp, err := http.Get(url)
 
 	if err != nil {
@@ -49,6 +51,8 @@ func downloadFile(url string, path string) (filepath string, err error) {
 
 func getURLFile() (linuxFileURL string) {
 
+	fmt.Println("== Conectando ao site do Go ...")
+
 	pageLink := "https://go.dev/dl/"
 
 	c := colly.NewCollector(colly.AllowedDomains("go.dev"))
@@ -67,6 +71,8 @@ func getURLFile() (linuxFileURL string) {
 
 func descompressAndInstall(filepath string) (err error) {
 
+	fmt.Println("== Removendo versões anteriores ...")
+
 	var cmd *exec.Cmd
 
 	cmd = exec.Command("rm", "-rf", "/usr/local/go")
@@ -75,6 +81,8 @@ func descompressAndInstall(filepath string) (err error) {
 	if err != nil {
 		return err
 	}
+
+	fmt.Printf("== Instalando %s ...\n", filepath)
 
 	cmd = exec.Command("tar", "-C", "/usr/local", "-xvf", filepath)
 	err = cmd.Run()
@@ -107,5 +115,7 @@ func main() {
 
 	if err != nil {
 		log.Panic(err.Error())
+	} else {
+		fmt.Println("== Processo concluído. Bem vindo ao seu novo Go!")
 	}
 }

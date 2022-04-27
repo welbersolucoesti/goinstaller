@@ -6,7 +6,7 @@
         {
             "label": "Compile and Run",
             "type": "shell",
-            "command": "go build -o bin/goinstaller && bin/goinstaller",
+            "command": "go build -o bin/goinstaller && sudo bin/goinstaller",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
